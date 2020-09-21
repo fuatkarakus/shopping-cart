@@ -9,7 +9,7 @@ An e-commerce shopping cart implementation
 
 - A shopping cart object that holds data itself.
 
-- A repository layer that handles crud operations shopping cart object.
+- A repository layer that handles crud operations of shopping cart object.
 
 - A service layer that handles business logic. 
 
