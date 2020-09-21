@@ -27,17 +27,22 @@ public class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
 
     @Override
     public void save(ShoppingCartItem entity) {
-        if (existsById(entity))
+        if (existsById(entity)) {
             this.shoppingCart
                     .getCartItems()
                     .stream()
                     .filter(i -> i.equals(entity))
                     .findFirst()
-                    .ifPresent(i -> i.setQuantity(i.getQuantity() + entity.getQuantity()));
+                    .ifPresent(i -> {
+                        i.setQuantity(i.getQuantity() + entity.getQuantity());
+                        i.setTotalPrice(i.calculateTotalPrice());
+                    });
+        } else {
+            this.shoppingCart
+                    .getCartItems()
+                    .add(entity);
+        }
 
-        this.shoppingCart
-                .getCartItems()
-                .add(entity);
     }
 
     @Override

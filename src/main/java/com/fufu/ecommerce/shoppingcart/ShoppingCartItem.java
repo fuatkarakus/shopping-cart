@@ -33,7 +33,7 @@ public class ShoppingCartItem {
         this.totalPrice = calculateTotalPrice();
     }
 
-    private BigDecimal calculateTotalPrice() {
+    public BigDecimal calculateTotalPrice() {
         return getUnitPrice().multiply(BigDecimal.valueOf(quantity));
     }
 

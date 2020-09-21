@@ -60,12 +60,20 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "ShoppingCart{" +
-                "cartItems=" + cartItems +
-                ", totalPrice=" + totalPrice +
-                ", deliveryCost=" + deliveryCost +
-                ", totalDiscount=" + totalDiscount +
-                ", discounts=" + discounts +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("ShoppingCart - cartItems: [");
+
+        for (ShoppingCartItem item : cartItems ) {
+            sb.append(item.getProduct().getTitle()).append("  ");
+        }
+
+        sb.append( " ] , totalPrice : " )
+                .append(totalPrice.toString())
+                .append( ",  deliveryCost : ")
+                .append(deliveryCost.toString())
+                .append(",  totalDiscount : ")
+                .append(totalDiscount.toString());
+
+        return sb.toString();
     }
 }
