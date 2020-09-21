@@ -7,7 +7,7 @@ package com.fufu.ecommerce;
 public class ShoppingCartApp {
 
     public static void main( String[] args ) {
-
+        System.out.println("Hello to Shopping Cart App");
     }
 
 }
