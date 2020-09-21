@@ -14,7 +14,6 @@ import com.fufu.ecommerce.shoppingcart.ShoppingCartItem;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * A class that handle Business Logic of Shopping Cart
@@ -101,30 +100,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     }
 
-    private BigDecimal totalAmountOfCampaignProducts(Campaign campaign) {
+    public BigDecimal totalAmountOfCampaignProducts(Campaign campaign) {
         List<ShoppingCartItem> itemsByCategory = repository.getItemsByCategory(campaign.getCategory());
-        return totalAmountGivenItems(itemsByCategory);
-    }
-
-    private BigDecimal totalAmountGivenItems(List<ShoppingCartItem> items) {
-        return items
+        return itemsByCategory
                 .stream()
                 .map(ShoppingCartItem::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private List<Campaign> getCampaigns(List<Discount> discounts){
-        return discounts.stream()
-                .filter(Campaign.class::isInstance)
-                .map(Campaign.class::cast)
-                .collect(Collectors.toList());
-    }
-
-    private List<Coupon> getCoupons(List<Discount> discounts){
-        return discounts.stream()
-                .filter(Coupon.class::isInstance)
-                .map(Coupon.class::cast)
-                .collect(Collectors.toList());
     }
 
     public Integer countCategory() {

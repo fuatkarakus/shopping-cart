@@ -19,7 +19,7 @@ class DeliveryCostServiceImplTest {
     }
 
     @Test
-    void givenProductAndDeliveryNumber_shoulReturnExactCost() {
+    void givenProductAndDeliveryNumber_shouldReturnExactCost() {
 
         // given
         Integer productNumber = 4;

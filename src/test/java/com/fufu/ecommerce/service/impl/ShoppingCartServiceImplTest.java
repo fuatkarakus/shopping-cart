@@ -19,9 +19,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,7 +30,7 @@ import static org.mockito.Mockito.times;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ShoppingCartServiceImplTest {
 
-    ShoppingCartService cartService;
+    ShoppingCartServiceImpl cartService;
     DeliveryCostService deliveryCostService;
     ShoppingCartRepository repository;
 
@@ -88,6 +86,40 @@ class ShoppingCartServiceImplTest {
         BigDecimal count = cartService.calculateTotalAmountOfCart();
 
         assertEquals(BigDecimal.valueOf(200), count);
+    }
+
+    @Test
+    void whenCalculateTotalAmountOfProduct_thenReturnTotalAmountOfProduct() {
+        List<ShoppingCartItem> items = Arrays.asList(entity2, entity);
+        Mockito.when(repository.findAll()).thenReturn(items);
+
+        BigDecimal count = cartService.calculateTotalAmountOfProduct();
+
+        assertEquals(BigDecimal.valueOf(100), count);
+    }
+
+    @Test
+    void givenCategoryTotalAmountOfCampaignProducts_thenReturnTotalAmountOfCampaignProducts() {
+        List<ShoppingCartItem> items = Arrays.asList(entity2, entity);
+        Mockito.when(repository.getItemsByCategory(any())).thenReturn(items);
+
+        BigDecimal count = cartService.totalAmountOfCampaignProducts((Campaign) campaign);
+
+        assertEquals(BigDecimal.valueOf(100), count);
+    }
+
+    @Test
+    void whenApplyDiscountOnCart_thenGetDiscountAmount() {
+        // given
+        Set<Discount> discounts =  new LinkedHashSet<>(Arrays.asList(coupon, campaign));
+        Mockito.when(repository.getDiscounts()).thenReturn(discounts);
+        Mockito.when(repository.getTotalDiscount()).thenReturn(BigDecimal.ZERO);
+
+        // when
+        BigDecimal totalDiscountAmount = cartService.applyDiscounts();
+
+        // then
+        assertEquals(BigDecimal.ZERO, totalDiscountAmount);
     }
 
     @Test

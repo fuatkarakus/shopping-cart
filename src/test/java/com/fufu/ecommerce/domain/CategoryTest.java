@@ -48,4 +48,20 @@ class CategoryTest {
         });
     }
 
+    @Test
+    void givenParentAndChild_shouldGet() {
+        Category blueApple = new Category( "fruit");
+        Category redApple =  new Category(blueApple, "malatya",null);
+
+        assertEquals(blueApple, redApple.getParent());
+    }
+
+    @Test
+    void givenParent_shouldEqualToParent() {
+        Category blueApple = new Category( "fruit");
+        Category redApple =  new Category(blueApple, "malatya");
+
+        assertEquals(blueApple, redApple.getParent());
+    }
+
 }
