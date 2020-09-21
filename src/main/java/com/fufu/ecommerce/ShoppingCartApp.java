@@ -7,6 +7,7 @@ package com.fufu.ecommerce;
 public class ShoppingCartApp {
 
     public static void main( String[] args ) {
+
     }
 
 }
